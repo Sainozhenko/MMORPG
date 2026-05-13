@@ -1,20 +1,121 @@
-/* website/static/css/style.css */
-footer {
-    background: #111;
-    padding: 20px;
-    text-align: center;
+/* ОБЩИЕ СТИЛИ СЕРВЕРОВ */
+.server-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #1a1a1a;
 }
-.social-icons a {
-    color: #f1c40f; 
-    margin: 0 10px;
-    font-size: 24px;
-    transition: 0.3s;
-    text-decoration: none;
-}
-.social-icons a:hover {
+
+.server-name {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
     color: #fff;
+    gap: 10px;
 }
+
+.server-online {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+/* АНИМАЦИЯ ОГНЯ */
+.status-fire {
+    color: #e67e22;
+    font-size: 14px;
+    animation: flicker 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes flicker {
+    0% { text-shadow: 0 0 2px #f1c40f; opacity: 0.8; }
+    100% { text-shadow: 0 0 10px #e67e22; opacity: 1; }
+}
+
+/* НОВОСТИ */
+.news-card {
+    background: rgba(0, 136, 204, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #0088cc;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+/* КНОПКИ АВТОРИЗАЦИИ */
 .auth-buttons a:hover {
     text-shadow: 0 0 10px rgba(241, 196, 15, 0.8);
     color: #fff !important;
+}
+
+/* ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ ФУТЕРА */
+footer {
+    background: #020202;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid #111;
+    width: 100%; /* Гарантируем ширину */
+}
+
+.footer-icons { 
+    display: flex !important; 
+    flex-direction: row !important;
+    justify-content: center !important; 
+    align-items: center !important; 
+    gap: 25px !important; /* Строгий одинаковый отступ */
+    margin: 0 auto 20px auto !important; 
+    padding: 0 !important;
+    list-style: none;
+}
+
+.footer-icons a { 
+    color: #f1c40f; 
+    font-size: 26px; 
+    transition: 0.3s; 
+    text-decoration: none; 
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important; /* УБИРАЕМ ЛЮБЫЕ СТОРОННИЕ ОТСТУПЫ */
+    padding: 0 !important;
+    width: auto;
+}
+
+.footer-icons a:hover { 
+    color: #fff; 
+    transform: translateY(-5px); 
+    text-shadow: 0 0 15px rgba(241, 196, 15, 0.8); 
+}
+
+.copy {
+    color: #333;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.progress-bg {
+    width: 100px;
+    height: 4px;
+    background: #222;
+    margin-top: 5px;
+    border-radius: 2px;
+}
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2ecc71, #f1c40f);
+    border-radius: 2px;
+    transition: width 1s ease-in-out;
+}
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #2ecc71;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #2ecc71;
+    animation: pulse-green 2s infinite;
+}
+@keyframes pulse-green {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
 }

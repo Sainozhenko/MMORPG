@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L2MAD Clone</title>
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <title>MMORPG</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -30,7 +30,7 @@
             justify-content: space-between; 
             align-items: center;
             height: 80px;
-            border-bottom: 1px solid rgba(142, 68, 173, 0.3); /* Фиолетовый оттенок границы */
+            border-bottom: 1px solid rgba(142, 68, 173, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -45,17 +45,46 @@
             text-decoration: none;
         }
 
-        nav a { 
+        nav { display: flex; align-items: center; }
+
+        nav a, .dropbtn { 
             color: #ccc; 
             text-decoration: none; 
             text-transform: uppercase; 
             margin: 0 15px;
             font-size: 14px;
             transition: 0.3s;
+            background: none;
+            border: none;
+            font-family: 'Oswald', sans-serif;
+            cursor: pointer;
         }
-        nav a:hover { color: #f1c40f; }
+        nav a:hover, .dropdown:hover .dropbtn { color: #f1c40f; }
 
-        /* ТА САМАЯ ФИОЛЕТОВАЯ КНОПКА LOG IN */
+        /* DROPDOWN COMMUNITY */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #0a0a0a;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1;
+            border: 1px solid #333;
+            top: 100%;
+        }
+        .dropdown-content a {
+            color: #888;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            margin: 0;
+            font-size: 13px;
+        }
+        .dropdown-content a:hover { background-color: #1a1a1a; color: #f1c40f; }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        /* Purple button */
         .login-btn-neon {
             background: linear-gradient(45deg, #4b0082, #8e44ad);
             color: #fff !important;
@@ -78,22 +107,8 @@
         }
 
         /* LANGUAGE DROPDOWN */
-        .lang-dropdown {
-            position: relative;
-            display: inline-block;
-            padding: 25px 0;
-        }
-
-        .lang-select {
-            color: #888;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
+        .lang-dropdown { position: relative; display: inline-block; padding: 25px 0; }
+        .lang-select { color: #888; cursor: pointer; text-transform: uppercase; font-size: 13px; display: flex; align-items: center; gap: 5px; }
         .lang-list {
             display: none;
             position: absolute;
@@ -105,37 +120,27 @@
             z-index: 1005;
             box-shadow: 0 10px 30px rgba(0,0,0,0.9);
         }
-
-        .lang-list::before {
-            content: "";
-            position: absolute;
-            top: -20px;
-            left: 0;
-            width: 100%;
-            height: 20px;
-        }
-
         .lang-list form button {
-            background: none;
-            border: none;
-            width: 100%;
-            text-align: left;
-            display: block;
-            padding: 12px 15px;
-            color: #888;
-            cursor: pointer;
-            font-family: 'Oswald';
-            text-transform: uppercase;
-            font-size: 12px;
-            transition: 0.2s;
+            background: none; border: none; width: 100%; text-align: left; display: block; padding: 12px 15px;
+            color: #888; cursor: pointer; font-family: 'Oswald'; text-transform: uppercase; font-size: 12px; transition: 0.2s;
         }
-
         .lang-list form button:hover { background: #1a1a1a; color: #f1c40f; }
         .lang-dropdown:hover .lang-list { display: block; }
 
+        /* СТИЛЬ ДЛЯ ИКОНКИ ОГНЯ В СТАТУСЕ СЕРВЕРОВ */
+        .status-fire {
+            color: #e67e22;
+            margin-right: 8px;
+            animation: flicker 1.5s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { text-shadow: 0 0 2px #f1c40f; opacity: 0.8; }
+            100% { text-shadow: 0 0 10px #e67e22; opacity: 1; }
+        }
+
         main { flex: 1; }
 
-        /* FOOTER */
+        /* FOOTER - РАВНОМЕРНЫЙ И КРАСИВЫЙ */
         footer {
             background: #020202;
             border-top: 1px solid #111;
@@ -143,70 +148,70 @@
             text-align: center;
             margin-top: 50px;
         }
-
-        .footer-icons { margin-bottom: 25px; }
-
+        .footer-icons { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 30px; 
+            margin-bottom: 25px; 
+        }
         .footer-icons a { 
             color: #f1c40f; 
-            font-size: 24px; 
-            margin: 0 12px; 
+            font-size: 26px; 
             transition: 0.3s; 
             text-decoration: none; 
-            display: inline-block;
+            display: flex;
+            align-items: center;
         }
-        
         .footer-icons a:hover { 
             color: #fff; 
-            transform: translateY(-3px); 
-            text-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+            transform: translateY(-5px); 
+            text-shadow: 0 0 10px rgba(241, 196, 15, 0.8); 
         }
-
         .copy { color: #333; font-size: 11px; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; }
         
         .logout-btn {
-            background: none; border: 1px solid #444; color: #888;
-            padding: 5px 12px; cursor: pointer; font-family: 'Oswald'; text-transform: uppercase;
+            background: none; border: 1px solid #444; color: #888; padding: 5px 12px; cursor: pointer; font-family: 'Oswald'; text-transform: uppercase;
         }
         .logout-btn:hover { border-color: #f1c40f; color: #f1c40f; }
-
-        /* Стиль для имени пользователя, чтобы оно было кликабельным */
-        .user-profile-link {
-            color: #f1c40f;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .user-profile-link:hover {
-            color: #fff;
-            text-shadow: 0 0 8px rgba(241, 196, 15, 0.7);
-        }
+        .user-profile-link { color: #f1c40f; text-decoration: none; font-weight: bold; transition: 0.2s; }
+        .user-profile-link:hover { color: #fff; text-shadow: 0 0 8px rgba(241, 196, 15, 0.7); }
     </style>
 </head>
-<body>
+<body id="body-main">
 
-<header>
-    <a href="{% url 'home' %}" class="logo-text">L2MAD</a>
-    <nav>
-        <a href="{% url 'home' %}">{% trans "Home" %}</a>
-        <a href="#">{% trans "About" %}</a>
-        <a href="#">{% trans "Community" %}</a>
+<header id="header-nav">
+    <a href="{% url 'home' %}" id="logo-main" class="logo-text">L2MAD</a>
+    <nav id="navbar">
+        <a href="{% url 'home' %}" id="nav-home">{% trans "Home" %}</a>
+        <a href="#" id="nav-about">{% trans "About" %}</a>
+        <div class="dropdown" id="nav-community-dropdown">
+            <button class="dropbtn" id="btn-community">{% trans "Community" %} <i class="fas fa-chevron-down" style="font-size: 10px;"></i></button>
+            <div class="dropdown-content" id="community-menu">
+                <a href="#" id="link-forum">FORUM</a>
+                <a href="https://t.me/boolean0101" target="_blank" id="link-telegram">TELEGRAM</a>
+                <a href="https://discord.com/" target="_blank" id="link-discord-menu">DISCORD</a>
+                <a href="https://www.facebook.com/dsainozh/" target="_blank" id="link-facebook">FACEBOOK</a>
+                <a href="https://www.instagram.com/dsainozh/" target="_blank" id="link-instagram">INSTAGRAM</a>
+            </div>
+        </div>
     </nav>
-    <div class="auth-buttons" style="display: flex; align-items: center; gap: 20px;">
+    <div class="auth-buttons" id="auth-section" style="display: flex; align-items: center; gap: 20px;">
         {% if user.is_authenticated %}
-            <a href="{% url 'profile' %}" class="user-profile-link">
+            <a href="{% url 'profile' %}" id="user-profile" class="user-profile-link">
                 <i class="fas fa-user"></i> {{ user.username }}
             </a>
-            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            <form action="{% url 'logout' %}" method="post" style="display:inline;" id="form-logout">
                 {% csrf_token %}
-                <button type="submit" class="logout-btn">{% trans "Logout" %}</button>
+                <button type="submit" id="btn-logout" class="logout-btn">{% trans "Logout" %}</button>
             </form>
         {% else %}
-            <a href="{% url 'login' %}" class="login-btn-neon">{% trans "Log In" %}</a>
-            <a href="{% url 'register' %}" style="color: #f1c40f; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 13px;">{% trans "Sign Up" %}</a>
+            <a href="{% url 'login' %}" id="btn-login" class="login-btn-neon">{% trans "Log In" %}</a>
+            <a href="{% url 'register' %}" id="btn-signup" style="color: #f1c40f; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 13px;">{% trans "Sign Up" %}</a>
         {% endif %}
 
-        <div class="lang-dropdown">
-            <div class="lang-select">
+        <div class="lang-dropdown" id="lang-switcher">
+            <div class="lang-select" id="current-lang">
                 <i class="fas fa-globe"></i> 
                 {% get_current_language as CURRENT_LANG %}
                 {% if CURRENT_LANG == 'ru' %} RU
@@ -215,32 +220,33 @@
                 {% endif %}
                 <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
             </div>
-            <div class="lang-list">
+            <div class="lang-list" id="lang-options">
                 <form action="{% url 'set_language' %}" method="post">
                     {% csrf_token %}
                     <input name="next" type="hidden" value="{{ request.get_full_path }}">
-                    <button type="submit" name="language" value="en">English</button>
-                    <button type="submit" name="language" value="ru">Русский</button>
-                    <button type="submit" name="language" value="uk">Українська</button>
+                    <button type="submit" name="language" value="en" id="lang-en">English</button>
+                    <button type="submit" name="language" value="ru" id="lang-ru">Русский</button>
+                    <button type="submit" name="language" value="uk" id="lang-uk">Українська</button>
                 </form>
             </div>
         </div>
     </div>
 </header>
 
-<main>
+<main id="content-area">
     {% block content %}{% endblock %}
 </main>
 
-<footer>
-    <div class="footer-icons">
-        <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
-        <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
-        <a href="https://github.com/твой-логин" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://linkedin.com/in/твой-профиль" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+<footer id="footer-main">
+    <div class="footer-icons" id="social-links-row">
+        <a href="https://discord.gg/" target="_blank" id="footer-discord" title="Discord"><i class="fab fa-discord"></i></a>
+        <a href="https://t.me/boolean0101" target="_blank" id="footer-telegram" title="Telegram"><i class="fab fa-telegram"></i></a>
+        <a href="https://github.com/sainozhenko" target="_blank" id="footer-github" title="GitHub Author"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/dsainozh" target="_blank" id="footer-linkedin" title="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+        <a href="https://twitter.com/" target="_blank" id="footer-twitter" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://youtube.com/" target="_blank" id="footer-youtube" title="YouTube Channel"><i class="fab fa-youtube"></i></a>
     </div>
-    <p class="copy">© 2026 DMYTRO SAINOZHENKO</p>
+    <p class="copy" id="copyright-text">© 2026 DMYTRO SAINOZHENKO | OFFICIAL L2MAD REPLICA</p>
 </footer>
 
 </body>

@@ -3,6 +3,7 @@
 
 {% block content %}
 <style>
+    /* HERO SECTION */
     .hero { position: relative; height: 550px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     .hero-bg {
         position: absolute; width: 100%; height: 100%;
@@ -16,42 +17,85 @@
     .btn-play {
         background: #f1c40f; color: #000; padding: 15px 40px; 
         text-decoration: none; font-weight: 900; border: 2px solid #fff;
+        transition: 0.3s;
+        display: inline-block;
+        box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+    }
+    .btn-play:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(241, 196, 15, 0.8);
+        background: #fff;
     }
 
+    /* INFO CONTAINERS */
     .info-container { display: flex; justify-content: center; gap: 30px; padding: 50px; background: #050505; }
     .block { background: rgba(15,15,15,0.9); border: 1px solid #222; padding: 25px; width: 350px; }
-    .status-online { color: #2ecc71; font-weight: bold; }
+
+    /* SERVER STATUS & PROGRESS BARS */
+    .server-row {
+        margin-top: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #111;
+    }
+    .server-main-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+    .server-info { display: flex; align-items: center; gap: 8px; }
+    .status-online { color: #2ecc71; font-weight: bold; font-size: 14px; }
+
+    /* Полоска прогресса */
+    .progress-bg {
+        width: 100%;
+        height: 4px;
+        background: #222;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #2ecc71, #f1c40f);
+        border-radius: 2px;
+        transition: width 1.5s ease-in-out;
+    }
 </style>
 
-<section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-content">
-        <h1 style="font-size: 50px;"><span style="color: #f1c40f;">INTERLUDE</span> X30</h1>
-        <p>ОТКРЫТИЕ 30 ТРАВНЯ — 18:00</p>
-        <a href="#" class="btn-play">PLAY FREE</a>
+<section class="hero" id="hero-section">
+    <div class="hero-bg" id="hero-background"></div>
+    <div class="hero-content" id="hero-text-block">
+        <h1 style="font-size: 50px;" id="hero-title"><span style="color: #f1c40f;">INTERLUDE</span> X30</h1>
+        <p id="hero-date">ОТКРЫТИЕ 30 ТРАВНЯ — 18:00</p>
+        <a href="#" class="btn-play" id="btn-play-main">PLAY FREE</a>
     </div>
 </section>
 
-<section class="info-container">
-    <div class="block">
-        <h3 style="color: #f1c40f; border-bottom: 1px solid #f1c40f;">СТАТУС СЕРВЕРІВ</h3>
+<section class="info-container" id="main-info-container">
+    <div class="block" id="block-servers">
+        <h3 style="color: #f1c40f; border-bottom: 1px solid #f1c40f;" id="title-status">СТАТУС СЕРВЕРІВ</h3>
         {% for server in servers %}
-            <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-                <span>{{ server.name }} [{{ server.server_type }}]</span>
-                <span class="status-online">{{ server.online_count }}</span>
+            <div class="server-row" id="server-row-{{ forloop.counter }}">
+                <div class="server-main-info">
+                    <div class="server-info">
+                        <i class="fas fa-fire status-fire" id="fire-{{ forloop.counter }}"></i>
+                        <span id="name-{{ forloop.counter }}">{{ server.name }} [{{ server.server_type }}]</span>
+                    </div>
+                    <span class="status-online" id="online-{{ forloop.counter }}">{{ server.online_count }}</span>
+                </div>
+                <div class="progress-bg">
+                    <div class="progress-fill" style="width: {{ server.online_count|add:0|divisibleby:10 }}%;"></div>
+                </div>
             </div>
         {% empty %}
-            <p>Сервери оновлюються...</p>
+            <p id="no-servers-text">Сервери оновлюються...</p>
         {% endfor %}
     </div>
 
-    <div class="block">
-        <h3 style="color: #f1c40f; border-bottom: 1px solid #f1c40f;">LATEST NEWS</h3>
+    <div class="block" id="block-news">
+        <h3 style="color: #f1c40f; border-bottom: 1px solid #f1c40f;" id="title-news">LATEST NEWS</h3>
         {% for n in news %}
-            <div style="margin-top: 10px;">
-                <small style="color: #f1c40f;">{{ n.created_at|date:"d.m" }}</small>
-                <div style="color: #eee;">{{ n.title }}</div>
+            <div style="margin-top: 10px; border-bottom: 1px solid #111; padding-bottom: 5px;" id="news-item-{{ forloop.counter }}">
+                <small style="color: #f1c40f;" id="news-date-{{ forloop.counter }}">{{ n.created_at|date:"d.m" }}</small>
+                <div style="color: #eee;" id="news-title-{{ forloop.counter }}">{{ n.title }}</div>
             </div>
+        {% empty %}
+            <p id="no-news-text">Новин поки немає.</p>
         {% endfor %}
     </div>
 </section>

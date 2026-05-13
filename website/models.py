@@ -11,14 +11,13 @@ class GameServer(models.Model):
     def __str__(self):
         return self.name
 
-# ВОТ ЭТОГО КЛАССА СЕЙЧАС НЕ ХВАТАЕТ:
+
 class News(models.Model):
     title = models.CharField("Заголовок", max_length=200)
     content = models.TextField("Текст новости")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        # Это исправит заголовок в боковом меню и в списке объектов
         verbose_name = "News"
         verbose_name_plural = "News"
 
@@ -33,7 +32,6 @@ class TopPlayer(models.Model):
     def __str__(self):
         return self.nickname
 
-# Модель для персонажей в личном кабинете
 class Character(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chars')
     name = models.CharField(max_length=16, unique=True)
