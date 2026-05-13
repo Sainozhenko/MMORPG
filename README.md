@@ -59,8 +59,8 @@ Add your best screenshots here to showcase your beautiful UI!
 Example:
 ![Homepage](static/images/screenshot.png)
 
-👨‍💻 Author
-Sainozhenko
+👨‍💻 Author:
+Dmytro Sainozhenko
 
 GitHub: @Sainozhenko
 
