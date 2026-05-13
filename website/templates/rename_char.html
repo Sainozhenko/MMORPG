@@ -1,0 +1,6 @@
+<form method="post">
+    {% csrf_token %}
+    <h3>Переименовать персонажа: {{ char.name }}</h3>
+    <input type="text" name="new_name" placeholder="Введите новый ник" required>
+    <button type="submit">Сохранить</button>
+</form>

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 50px auto; background: rgba(0,0,0,0.9); padding: 40px; border: 1px solid #f1c40f; box-shadow: 0 0 20px rgba(241, 196, 15, 0.2);">
+    <h2 style="color: #f1c40f; text-align: center; text-transform: uppercase; letter-spacing: 2px;">Создать аккаунт</h2>
+    
+    <form method="post" style="margin-top: 25px;">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div style="margin-bottom: 20px;">
+                <label style="color: #f1c40f; display: block; margin-bottom: 8px; font-weight: bold;">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small style="color: #666; display: block; margin-top: 5px; font-size: 11px;">
+                        {{ field.help_text|safe }}
+                    </small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p style="color: #ff4d4d; font-size: 12px; margin: 5px 0;">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" style="width: 100%; background: #f1c40f; color: #000; padding: 15px; font-weight: bold; border: none; cursor: pointer; text-transform: uppercase; transition: 0.3s; margin-top: 10px;">
+            Зарегистрироваться
+        </button>
+    </form>
+
+    <div style="margin-top: 25px; text-align: center; color: #888;">
+        Уже играли у нас? <a href="{% url 'login' %}" style="color: #f1c40f; text-decoration: none;">Войти в кабинет</a>
+    </div>
+</div>
+
+<style>
+    /* Стили для инпутов, чтобы они были темными */
+    input { 
+        width: 100%; 
+        padding: 12px; 
+        background: #111; 
+        border: 1px solid #333; 
+        color: #fff; 
+        box-sizing: border-box;
+        border-radius: 3px;
+    }
+    input:focus { border-color: #f1c40f; outline: none; }
+    ul { list-style: none; padding: 0; color: #666; font-size: 11px; } /* Скрываем маркеры списка подсказок пароля */
+</style>
+{% endblock %}

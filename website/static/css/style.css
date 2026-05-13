@@ -1,0 +1,20 @@
+/* website/static/css/style.css */
+footer {
+    background: #111;
+    padding: 20px;
+    text-align: center;
+}
+.social-icons a {
+    color: #f1c40f; 
+    margin: 0 10px;
+    font-size: 24px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+.social-icons a:hover {
+    color: #fff;
+}
+.auth-buttons a:hover {
+    text-shadow: 0 0 10px rgba(241, 196, 15, 0.8);
+    color: #fff !important;
+}

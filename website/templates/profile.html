@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 40px auto; padding: 20px; background: rgba(0,0,0,0.85); border: 1px solid #333; border-radius: 5px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1c40f; padding-bottom: 15px; margin-bottom: 30px;">
+        <h2 style="margin: 0; color: #fff; text-transform: uppercase;">
+            <i class="fas fa-user-shield" style="color: #f1c40f;"></i> Кабинет: <span style="color: #f1c40f;">{{ user.username }}</span>
+        </h2>
+        <a href="{% url 'create_char' %}" style="background: #f1c40f; color: #000; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 3px; text-transform: uppercase; font-size: 14px;">
+            + Создать персонажа
+        </a>
+    </div>
+
+    <h3 style="color: #ccc; text-transform: uppercase; font-size: 18px;">Мои герои:</h3>
+    
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; color: #eee; text-align: left;">
+        <thead>
+            <tr style="background: rgba(241, 196, 15, 0.1); color: #f1c40f;">
+                <th style="padding: 15px; border-bottom: 1px solid #444;">НИКНЕЙМ</th>
+                <th style="padding: 15px; border-bottom: 1px solid #444;">УРОВЕНЬ</th>
+                <th style="padding: 15px; border-bottom: 1px solid #444; text-align: right;">ДЕЙСТВИЯ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for char in chars %}
+            <tr style="border-bottom: 1px solid #222; transition: 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 15px; font-weight: bold;">{{ char.name }}</td>
+                <td style="padding: 15px;"><span style="color: #2ecc71;">{{ char.level }} LVL</span></td>
+                <td style="padding: 15px; text-align: right;">
+                    <a href="{% url 'rename_char' char.id %}" style="color: #f1c40f; text-decoration: none; margin-right: 15px; font-size: 13px;">
+                        <i class="fas fa-edit"></i> Имя
+                    </a>
+                    <a href="{% url 'delete_char' char.id %}" style="color: #e74c3c; text-decoration: none; font-size: 13px;" onclick="return confirm('Вы уверены, что хотите удалить персонажа?')">
+                        <i class="fas fa-trash-alt"></i> Удалить
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" style="padding: 30px; text-align: center; color: #666;">
+                    У вас пока нет созданных персонажей. Пора это исправить!
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="margin-top: 40px; text-align: right;">
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="background: none; border: 1px solid #e74c3c; color: #e74c3c; padding: 8px 15px; cursor: pointer; border-radius: 3px; font-size: 12px; transition: 0.3s;">
+                ВЫЙТИ ИЗ АККАУНТА
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
