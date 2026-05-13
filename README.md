@@ -38,15 +38,15 @@ To run this project locally:
 1. **Clone the repository:**
    git clone [https://github.com/Sainozhenko/MMORPG.git](https://github.com/Sainozhenko/MMORPG.git)
    
-2. **Install dependencies:
+2. Install dependencies:
 
 pip install -r requirements.txt
 
-3. **Run migrations:
+3. Run migrations:
 
 python manage.py migrate
 
-4. **Start the server:
+4. Start the server:
 
 python manage.py runserver
 
