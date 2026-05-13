@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-p*$3uj4ttfm=&m)os8&zazjbd8!r^(rm!(&36lyn4afekylqen
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mmorpg-zydu.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
