@@ -52,7 +52,7 @@ python manage.py runserver
 
 🌐 Live Demo
 Check out the live version of the project hosted on Render:
-👉![MMORPG Website](https://mmorpg-zydu.onrender.com/)
+👉[MMORPG Website](https://mmorpg-zydu.onrender.com/)
 
 📸 Screenshots
 Add your best screenshots here to showcase your beautiful UI!
