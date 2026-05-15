@@ -4,3 +4,5 @@ openpyxl
 gunicorn
 whitenoise
 django-cors-headers
+djangorestframework
+markdown
