@@ -6,3 +6,4 @@ whitenoise
 django-cors-headers
 djangorestframework
 markdown
+requests
