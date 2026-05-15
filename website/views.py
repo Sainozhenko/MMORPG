@@ -1,8 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import L2Server, News, TopPlayer, Character
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from . import services
+from django.views import View
 
 
 def home(request):
@@ -55,3 +58,8 @@ def delete_char(request, char_id):
     char = get_object_or_404(Character, id=char_id, owner=request.user)
     char.delete()
     return redirect('profile')
+
+class ProfileDashboardView(LoginRequiredMixin, View):
+    def get(self, request):
+        chars = services.get_player_characters(request.user.id)
+        return render(request, "profile.html", {"chars": chars})
