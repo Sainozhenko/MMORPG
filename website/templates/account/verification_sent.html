@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div style="background-color: #050505; min-height: 100vh; display: flex; justify-content: center; align-items: center;">
+    <div style="background: #0a0a0a; border: 1px solid #111; border-top: 2px solid #f1c40f; width: 100%; max-width: 500px; padding: 40px; text-align: center; box-shadow: 0 0 20px rgba(0,0,0,0.8);">
+        <i class="fas fa-envelope-open-text" style="color: #f1c40f; font-size: 48px; margin-bottom: 20px;"></i>
+        
+        <h2 style="font-family: 'Oswald', sans-serif; color: #f1c40f; text-transform: uppercase; font-size: 24px; margin-bottom: 15px;">
+            {% trans "Подтвердите вашу почту" %}
+        </h2>
+        
+        <p style="font-family: 'Oswald', sans-serif; color: #ccc; font-size: 15px; line-height: 1.6;">
+            {% trans "Мы отправили вам письмо со ссылкой для подтверждения аккаунта. Пожалуйста, проверьте ваш почтовый ящик (и папку Спам, если письма долго нет)." %}
+        </p>
+        
+        <a href="{% url 'home' %}" style="display: inline-block; margin-top: 25px; border: 1px solid #444; color: #888; padding: 8px 20px; text-decoration: none; text-transform: uppercase; font-family: 'Oswald'; font-size: 13px; transition: 0.3s;">
+            {% trans "На главную" %}
+        </a>
+    </div>
+</div>
+{% endblock %}

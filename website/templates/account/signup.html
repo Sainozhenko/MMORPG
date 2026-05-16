@@ -6,10 +6,10 @@
     <div class="auth-card">
 
         <h2>
-            {% trans "Sign In" %}
+            {% trans "Create Account" %}
         </h2>
 
-        <form method="POST" action="{% url 'account_login' %}" style="font-family: 'Oswald', sans-serif; color: #fff;">
+        <form method="POST" action="{% url 'account_signup' %}" style="font-family: 'Oswald', sans-serif; color: #fff;">
             {% csrf_token %}
 
             {% if form.errors %}
@@ -23,11 +23,7 @@
                     <div class="form-group">
 
                         <label class="form-label">
-                            {% if field.name == "username" %}
-                                {% trans "Username or Email" %}
-                            {% else %}
-                                {{ field.label }}
-                            {% endif %}
+                            {{ field.label }}
                         </label>
 
                         {{ field }}
@@ -49,14 +45,14 @@
             </div>
 
             <button type="submit" class="auth-submit-btn">
-                {% trans "Log In" %}
+                {% trans "Sign Up" %}
             </button>
         </form>
 
         <p class="auth-footer-text">
-            {% trans "Don't have an account?" %}
-            <a href="{% url 'account_signup' %}">
-                {% trans "Sign Up" %}
+            {% trans "Already have an account?" %}
+            <a href="{% url 'account_login' %}">
+                {% trans "Log In" %}
             </a>
         </p>
 
@@ -83,10 +79,6 @@
         max-width: 450px;
         box-sizing: border-box;
         border-radius: 4px;
-        min-height: 640px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
     }
 
     .auth-card h2 {
