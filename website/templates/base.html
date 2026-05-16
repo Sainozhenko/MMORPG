@@ -12,50 +12,104 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Oswald:wght@300;400;500;700&display=swap');
         
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #050505;
+        }
+
         body { 
-            background-color: #050505; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.8)), url("{% static 'images/bg-main.jpg' %}");
+            background-size: cover; 
+            background-attachment: fixed;
+            background-position: center top; 
+            background-repeat: no-repeat;
             color: #fff; 
             font-family: 'Oswald', sans-serif; 
-            margin: 0; 
             overflow-x: hidden;
         }
 
-        /* HEADER - ПОЛНОСТЬЮ ПРОЗРАЧНЫЙ */
+        .site-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
         header { 
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 90px;
+            height: 90px; 
             display: grid;
-            grid-template-columns: 1fr auto 1fr; /* Лого слева, меню центр, аuth справа */
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
             padding: 0 40px;
             box-sizing: border-box;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
-            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0) 100%);
+            z-index: 9999; 
         }
 
-        /* ЛОГОТИП (СЛЕВА) */
-        .logo-container {
-            display: flex;
-            align-items: center;
+        /* --- НОВЫЕ ИГРОВЫЕ СТИЛИ ДЛЯ ЛОГОТИПА MMO | RPG --- */
+        .logo-container { 
+            display: flex; 
+            align-items: center; 
         }
-        .logo-text {
-            font-family: 'Cinzel', serif;
-            color: #f1c40f;
+        
+        .logo-text-mmo {
+            display: inline-flex;
+            align-items: center;
+            font-family: 'Cinzel', serif; /* Премиальный шрифт с засечками */
             font-size: 26px;
             font-weight: 700;
             text-decoration: none;
-            text-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            gap: 10px; /* Отступы между буквами и неоновой линией */
         }
 
-        /* МЕНЮ (ПО ЦЕНТРУ) */
-        nav { 
-            display: flex; 
-            gap: 25px; 
+        /* Белая часть MMO */
+        .logo-part-mmo {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
+
+        /* Светящаяся неоновая палочка из скриншота */
+        .logo-part-divider {
+            display: inline-block;
+            width: 3px;
+            height: 22px; /* Подогнано под высоту шрифта Cinzel */
+            background-color: #f1c40f;
+            border-radius: 2px;
+            /* Многослойное сияние: желтый + оранжевый неон */
+            box-shadow: 
+                0 0 8px #f1c40f, 
+                0 0 15px #f39c12, 
+                0 0 22px #f1c40f;
+            animation: neon-pulsation 2s infinite alternate; /* Эффект «живого» мерцания */
+        }
+
+        /* Золотая часть RPG */
+        .logo-part-rpg {
+            color: #f1c40f;
+            text-shadow: 0 0 12px rgba(241, 196, 15, 0.4);
+        }
+
+        /* Анимация пульсации для неонового разделителя */
+        @keyframes neon-pulsation {
+            from {
+                box-shadow: 0 0 6px #f1c40f, 0 0 12px #f39c12;
+                opacity: 0.85;
+            }
+            to {
+                box-shadow: 0 0 14px #f1c40f, 0 0 24px #f39c12, 0 0 30px #f1c40f;
+                opacity: 1;
+            }
+        }
+        /* ------------------------------------------------ */
+
+        nav { display: flex; gap: 25px; }
         nav a, .dropbtn { 
             color: #fff; 
             text-decoration: none; 
@@ -72,7 +126,6 @@
         }
         nav a:hover, .dropdown:hover .dropbtn { opacity: 1; color: #f1c40f; }
 
-        /* DROPDOWN */
         .dropdown { position: relative; }
         .dropdown-content {
             display: none;
@@ -80,29 +133,31 @@
             background-color: rgba(10, 10, 10, 0.98);
             min-width: 160px;
             border: 1px solid #333;
-            top: 40px;
+            top: 100%;
             left: 50%;
             transform: translateX(-50%);
+            padding-top: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
         .dropdown-content a {
             color: #888;
             padding: 12px 15px;
             text-decoration: none;
             display: block;
-            font-size: 12px;
+            font-size: 13px;
             text-align: center;
+            text-transform: uppercase;
+            transition: 0.2s;
         }
         .dropdown-content a:hover { background: #1a1a1a; color: #f1c40f; }
         .dropdown:hover .dropdown-content { display: block; }
 
-        /* ПРАВАЯ ЧАСТЬ (LOG IN + LANG) */
         .header-right {
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
         }
-
         .login-link {
             color: #fff;
             text-decoration: none;
@@ -111,28 +166,32 @@
             opacity: 0.8;
             transition: 0.3s;
         }
-        .login-link:hover { opacity: 1; }
+        .login-link:hover { opacity: 1; color: #f1c40f; }
 
-        /* LANGUAGE */
-        .lang-dropdown { position: relative; }
+        .signup-link-header {
+            color: #f1c40f;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            padding: 6px 15px;
+            transition: 0.3s;
+        }
+        .signup-link-header:hover {
+            background: #f1c40f;
+            color: #000;
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+        }
+
+        .lang-dropdown { position: relative; margin-left: 10px; }
         .lang-select { 
-            color: #fff; 
-            opacity: 0.8;
-            cursor: pointer; 
-            text-transform: uppercase; 
-            font-size: 14px; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
+            color: #fff; opacity: 0.8; cursor: pointer; text-transform: uppercase; 
+            font-size: 14px; display: flex; align-items: center; gap: 8px; 
         }
         .lang-list {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 30px;
-            background: #0a0a0a;
-            border: 1px solid #333;
-            min-width: 120px;
+            display: none; position: absolute; right: 0; top: 100%;
+            background: #0a0a0a; border: 1px solid #333; min-width: 120px; padding-top: 5px;
         }
         .lang-list button {
             background: none; border: none; width: 100%; text-align: left; padding: 10px;
@@ -141,27 +200,91 @@
         .lang-list button:hover { color: #f1c40f; background: #111; }
         .lang-dropdown:hover .lang-list { display: block; }
 
-        main { width: 100%; }
-
-        /* Стили футера оставляем без изменений, как ты просил */
-        footer {
-            background: #020202;
-            border-top: 1px solid #111;
-            padding: 50px 20px;
+        main { 
+            width: 100%; 
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            padding-top: 90px; 
+            box-sizing: border-box;
+        }
+        
+        .hero-banner {
+            width: 100%;
+            height: 600px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            box-sizing: border-box;
+        }
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 56px;
+            color: #fff;
+            margin: 0;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.95), 0 0 30px rgba(0,0,0,0.5);
+        }
+        .hero-title span { color: #f1c40f; }
+        .hero-subtitle {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #eee;
+            margin: 12px 0 30px 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+        }
+
+        .btn-play-mmo-yellow {
+            position: relative;
+            font-family: 'Oswald', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #000;
+            text-decoration: none;
+            padding: 14px 50px;
+            background: linear-gradient(135deg, #f1c40f 0%, #d4ac0d 100%);
+            border: 2px solid #f39c12;
+            display: inline-block;
+            clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px);
+            box-shadow: 0 0 25px rgba(241, 196, 15, 0.4);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn-play-mmo-yellow:hover {
+            background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%);
+            border-color: #f1c40f;
+            box-shadow: 0 0 35px rgba(241, 196, 15, 0.8);
+            transform: scale(1.03);
+        }
+
+        footer {
+            flex-shrink: 0;
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(to top, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0) 100%);
+            border-top: 1px solid rgba(241, 196, 15, 0.05);
         }
         .footer-icons { display: flex; justify-content: center; gap: 30px; }
-        .footer-icons a { color: #f1c40f; font-size: 26px; text-decoration: none; }
-        .copy { color: #333; font-size: 11px; margin-top: 20px; text-transform: uppercase; }
+        .footer-icons a { color: #f1c40f; font-size: 22px; text-decoration: none; opacity: 0.6; transition: 0.3s; }
+        .footer-icons a:hover { opacity: 1; transform: translateY(-2px); text-shadow: 0 0 10px rgba(241, 196, 15, 0.5); }
+        .copy { color: #777; font-size: 11px; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
 <body>
-
+<div class="site-wrapper">
 <header>
     <div class="logo-container">
-        <a href="{% url 'home' %}" class="logo-text">L2MAD</a>
+        <a href="{% url 'home' %}" class="logo-text-mmo">
+            <span class="logo-part-mmo">MMO</span>
+            <span class="logo-part-divider"></span>
+            <span class="logo-part-rpg">RPG</span>
+        </a>
     </div>
-
     <nav>
         <div class="dropdown">
             <button class="dropbtn">{% trans "About the server" %} <i class="fas fa-caret-down" style="font-size: 12px;"></i></button>
@@ -174,25 +297,24 @@
             <button class="dropbtn">{% trans "Community" %} <i class="fas fa-caret-down" style="font-size: 12px;"></i></button>
             <div class="dropdown-content">
                 <a href="#">FORUM</a>
-                <a href="#">TELEGRAM</a>
-                <a href="#">DISCORD</a>
+                <a href="https://t.me/boolean0101" target="_blank">TELEGRAM</a>
+                <a href="https://discord.gg/" target="_blank">DISCORD</a>
             </div>
         </div>
         <a href="#">{% trans "Promotions" %}</a>
         <a href="#">{% trans "Donations" %}</a>
     </nav>
-
     <div class="header-right">
         {% if user.is_authenticated %}
             <a href="{% url 'profile' %}" style="color: #f1c40f; text-decoration: none; font-size: 14px; text-transform: uppercase;">{{ user.username }}</a>
-            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            <form action="{% url 'account_logout' %}" method="post" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" style="background:none; border:none; color:#fff; cursor:pointer; font-family:'Oswald'; font-size:14px; text-transform:uppercase; opacity:0.8;">{% trans "Logout" %}</button>
             </form>
         {% else %}
-            <a href="{% url 'login' %}" class="login-link">{% trans "Log In" %}</a>
+            <a href="{% url 'account_login' %}" class="login-link">{% trans "Log In" %}</a>
+            <a href="{% url 'account_signup' %}" class="signup-link-header">{% trans "Sign Up" %}</a>
         {% endif %}
-
         <div class="lang-dropdown">
             <div class="lang-select">
                 <i class="fas fa-globe" style="font-size: 14px;"></i> 
@@ -205,8 +327,8 @@
                     {% csrf_token %}
                     <input name="next" type="hidden" value="{{ request.get_full_path }}">
                     <button type="submit" name="language" value="en">English</button>
-                    <button type="submit" name="language" value="ru">Русский</button>
-                    <button type="submit" name="language" value="uk">Українська</button>
+                    <button type="submit" name="language" value="ru">Russian</button>
+                    <button type="submit" name="language" value="uk">Ukrainian</button>
                 </form>
             </div>
         </div>
@@ -214,20 +336,27 @@
 </header>
 
 <main>
+    {% if request.resolver_match.url_name == 'home' %}
+        <section class="hero-banner">
+            <h1 class="hero-title">INTERLUDE <span>X30</span></h1>
+            <p class="hero-subtitle">Opening May 27 — 6:30 PM</p>
+            <a href="{% url 'account_signup' %}" class="btn-play-mmo-yellow">Play Free</a>
+        </section>
+    {% endif %}
     {% block content %}{% endblock %}
 </main>
 
-<footer id="footer-main">
-    <div class="footer-icons" id="social-links-row">
-        <a href="https://discord.gg/" target="_blank" id="footer-discord" title="Discord"><i class="fab fa-discord"></i></a>
-        <a href="https://t.me/boolean0101" target="_blank" id="footer-telegram" title="Telegram"><i class="fab fa-telegram"></i></a>
-        <a href="https://github.com/sainozhenko" target="_blank" id="footer-github" title="GitHub Author"><i class="fab fa-github"></i></a>
-        <a href="https://linkedin.com/in/dsainozh" target="_blank" id="footer-linkedin" title="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
-        <a href="https://twitter.com/" target="_blank" id="footer-twitter" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
-        <a href="https://youtube.com/" target="_blank" id="footer-youtube" title="YouTube Channel"><i class="fab fa-youtube"></i></a>
+<footer>
+    <div class="footer-icons">
+        <a href="https://discord.gg/" target="_blank"><i class="fab fa-discord"></i></a>
+        <a href="https://t.me/boolean0101" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://github.com/sainozhenko" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/dsainozh" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://twitter.com/" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
     </div>
-    <p class="copy" id="copyright-text">© 2026 DMYTRO SAINOZHENKO | OFFICIAL L2MAD REPLICA</p>
+    <p class="copy">© 2026 DMYTRO SAINOZHENKO | OFFICIAL L2MAD REPLICA</p>
 </footer>
-
+</div>
 </body>
 </html>
