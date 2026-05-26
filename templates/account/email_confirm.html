@@ -3,54 +3,143 @@
 {% load account %}
 
 {% block content %}
-<div style="display: flex; justify-content: center; align-items: center; min-height: 75vh; width: 100%; padding: 20px; box-sizing: border-box;">
+<div class="confirm-page-wrapper">
     
-    <div style="width: 100%; max-width: 650px; background-color: #0b0b0b; border-top: 2px solid #ffc107; border-bottom: 2px solid #ffc107; padding: 50px 40px; box-shadow: 0 4px 25px rgba(0, 0, 0, 0.9); display: flex; flex-direction: column; align-items: center;">
+    <div class="confirm-card">
         
-        <div style="margin-bottom: 30px; background-color: #ffc107; width: 65px; height: 45px; border-radius: 4px; display: flex; justify-content: center; align-items: center; position: relative; box-shadow: 0 0 15px rgba(255, 193, 7, 0.35);">
-            <i class="fas fa-envelope" style="color: #0b0b0b; font-size: 1.8rem;"></i>
+        <div class="envelope-badge">
+            <i class="fas fa-envelope"></i>
         </div>
 
         {% if confirmation %}
             {% user_display confirmation.email_address.user as user_display %}
             
-            <h1 style="color: #ffffff; font-family: 'Arial Black', Gadget, sans-serif; font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; text-align: center;">
-                Приветствуем, {{ user_display }}!
+            <h1 class="confirm-title">
+                Welcome, {{ user_display }}!
             </h1>
             
-            <p style="color: #aaaaaa; font-family: Arial, sans-serif; font-size: 1.05rem; line-height: 1.6; margin-bottom: 35px; text-align: center; max-width: 520px;">
-                Пожалуйста, подтвердите, что почтовый ящик <span style="color: #ffc107; font-weight: bold;">{{ confirmation.email_address.email }}</span> принадлежит вам, чтобы завершить активацию игрового аккаунта.
+            <p class="confirm-text">
+                Please confirm that the email address <span class="highlight-email">{{ confirmation.email_address.email }}</span> belongs to you to complete your game account activation.
             </p>
 
             <form method="post" action="{% url 'account_confirm_email' confirmation.key %}" style="width: 100%; display: flex; justify-content: center;">
                 {% csrf_token %}
-                <button type="submit" class="mmo-submit-btn" style="width: 100%; max-width: 420px; background-color: #ffc107; color: #000000; border: none; padding: 14px 0; font-family: 'Arial Black', Gadget, sans-serif; font-size: 1.1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: background-color 0.2s, transform 0.1s; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);">
-                    Подтвердить и войти
+                <button type="submit" class="mmo-submit-btn">
+                    Confirm & Activate
                 </button>
             </form>
 
         {% else %}
-            {% url 'account_email' as email_url %}
-            
-            <h1 style="color: #dc3545; font-family: 'Arial Black', Gadget, sans-serif; font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; text-align: center;">
-                Ошибка ссылки
+            <h1 class="confirm-title error">
+                Link Expired
             </h1>
-            <p style="color: #aaaaaa; font-family: Arial, sans-serif; font-size: 1.05rem; line-height: 1.6; margin-bottom: 35px; text-align: center;">
-                Эта ссылка устарела или уже была использована для входа.
+            <p class="confirm-text">
+                This activation link is invalid, expired, or has already been used.
             </p>
-            <a href="{{ email_url }}" class="mmo-submit-btn" style="display: inline-block; text-align: center; width: 100%; max-width: 420px; background-color: #ffc107; color: #000000; text-decoration: none; padding: 14px 0; font-family: 'Arial Black', Gadget, sans-serif; font-size: 1.1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);">
-                Запросить новую ссылку
-            </a>
         {% endif %}
 
     </div>
 </div>
 
 <style>
-    .mmo-submit-btn:hover {
-        background-color: #e0a800 !important;
-        color: #000000 !important;
+    .confirm-page-wrapper {
+        flex: 1 1 auto;
+        display: flex; 
+        justify-content: center; 
+        align-items: flex-start; 
+        padding: 80px 20px; 
+        min-height: 65vh; 
+        box-sizing: border-box;
     }
+    
+   
+    .confirm-card {
+        width: 100%; 
+        max-width: 600px; 
+        background-color: rgba(10, 10, 10, 0.9); 
+        border: 1px solid #f1c40f; 
+        box-shadow: 0 0 25px rgba(241, 196, 15, 0.2); 
+        padding: 50px 40px; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+   
+    .envelope-badge {
+        margin-bottom: 30px; 
+        background-color: #f1c40f; 
+        width: 65px; 
+        height: 45px; 
+        border-radius: 4px; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        box-shadow: 0 0 15px rgba(241, 196, 15, 0.35);
+    }
+    .envelope-badge i {
+        color: #0b0b0b; 
+        font-size: 1.6rem;
+    }
+    
+    
+    .confirm-title {
+        color: #ffffff; 
+        font-family: 'Oswald', 'Arial Black', sans-serif; 
+        font-size: 1.8rem; 
+        font-weight: 900; 
+        text-transform: uppercase; 
+        letter-spacing: 2px; 
+        margin-bottom: 20px; 
+        text-align: center;
+    }
+    .confirm-title.error {
+        color: #e74c3c;
+    }
+    
+    
+    .confirm-text {
+        color: #aaaaaa; 
+        font-family: Arial, sans-serif; 
+        font-size: 1.05rem; 
+        line-height: 1.6; 
+        margin-bottom: 35px; 
+        text-align: center; 
+        max-width: 520px;
+    }
+    
+    .highlight-email {
+        color: #f1c40f; 
+        font-weight: bold;
+    }
+    
+  
+    .mmo-submit-btn {
+        width: 100%; 
+        max-width: 420px; 
+        background-color: #f1c40f; 
+        color: #000000; 
+        border: 1px solid #f1c40f; 
+        padding: 14px 0; 
+        font-family: 'Oswald', 'Arial Black', sans-serif; 
+        font-size: 1.1rem; 
+        font-weight: bold; 
+        text-transform: uppercase; 
+        letter-spacing: 2px; 
+        cursor: pointer; 
+        transition: 0.2s ease-in-out; 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        box-sizing: border-box;
+    }
+    
+    .mmo-submit-btn:hover {
+        background-color: transparent !important;
+        color: #f1c40f !important;
+        box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+    }
+    
     .mmo-submit-btn:active {
         transform: scale(0.99);
     }
