@@ -4,21 +4,28 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('website', '0001_initial'),
+        ("website", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='L2Server',
+            name="L2Server",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('server_type', models.CharField(max_length=100)),
-                ('opening_date', models.CharField(blank=True, max_length=100)),
-                ('online_count', models.IntegerField(default=0)),
-                ('status', models.CharField(default='online', max_length=20)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                ("server_type", models.CharField(max_length=100)),
+                ("opening_date", models.CharField(blank=True, max_length=100)),
+                ("online_count", models.IntegerField(default=0)),
+                ("status", models.CharField(default="online", max_length=20)),
             ],
         ),
     ]
