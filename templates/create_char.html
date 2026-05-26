@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-page-wrapper" style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
+    <div style="width: 100%; max-width: 450px; background: rgba(10, 10, 10, 0.85); padding: 40px; border: 1px solid #f1c40f; box-shadow: 0 0 25px rgba(241, 196, 15, 0.2); border-radius: 4px; text-align: center; box-sizing: border-box;">
+        
+        <h2 style="color: #f1c40f; font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 2px; font-size: 26px; margin-bottom: 30px;">
+            Create a Character
+        </h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div style="margin-bottom: 25px; text-align: left;">
+                <label style="color: #ccc; font-family: 'Oswald', sans-serif; display: block; margin-bottom: 10px; text-transform: uppercase; font-size: 13px; letter-spacing: 1px;">
+                    Enter character nickname:
+                </label>
+                <input type="text" name="name" required placeholder="NICKNAME" class="char-input">
+            </div>
+            
+            <button type="submit" class="char-submit-btn">
+                Accept
+            </button>
+        </form>
+        
+        <div style="margin-top: 25px;">
+            <a href="{% url 'profile' %}" style="color: #666; text-decoration: none; font-size: 12px; font-family: 'Oswald', sans-serif; letter-spacing: 1px; transition: 0.3s;" onmouseover="this.style.color='#f1c40f'" onmouseout="this.style.color='#666'">
+                ← GO BACK TO PROFILE
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Кастомные стили для инпута ввода имени */
+    .char-input {
+        width: 100%; 
+        padding: 14px; 
+        background: #050505; 
+        border: 1px solid #333; 
+        color: #f1c40f; 
+        text-align: center; 
+        font-weight: bold; 
+        font-size: 16px;
+        letter-spacing: 2px;
+        box-sizing: border-box;
+        font-family: 'Oswald', sans-serif;
+        transition: 0.3s;
+    }
+    .char-input:focus {
+        outline: none;
+        border-color: #f1c40f;
+        box-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+        background: #0a0a0a;
+    }
+
+    /* Стильная кнопка в стиле MMORPG */
+    .char-submit-btn {
+        width: 100%; 
+        background: #f1c40f; 
+        color: #000; 
+        padding: 14px; 
+        font-weight: bold; 
+        border: 1px solid #f1c40f;
+        cursor: pointer; 
+        text-transform: uppercase;
+        font-family: 'Oswald', sans-serif;
+        font-size: 15px;
+        letter-spacing: 1px;
+        transition: 0.3s ease-in-out;
+    }
+    .char-submit-btn:hover {
+        background: transparent;
+        color: #f1c40f;
+        box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+    }
+</style>
+{% endblock %}

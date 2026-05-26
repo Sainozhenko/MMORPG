@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div class="auth-page-wrapper">
+    <div class="auth-card">
+        <h2>{% trans "Sign In" %}</h2>
+
+        <form method="POST" action="{% url 'account_login' %}" style="font-family: 'Oswald', sans-serif; color: #fff;">
+            {% csrf_token %}
+
+            {% if form.errors or form.non_field_errors %}
+                <ul class="auth-error-list">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="allauth-form-fields">
+                {% for field in form %}
+                    {% if field.name != "remember" %} 
+                        <div class="form-group">
+                            <label class="form-label">
+                                {% if field.name == "username" %}
+                                    {% trans "Username or Email" %}
+                                {% else %}
+                                    {{ field.label }}
+                                {% endif %}
+                            </label>
+                            {{ field }}
+                            
+                            {% if field.name == "password" %}
+                                <a href="{% url 'account_reset_password' %}" class="forgot-password-link">
+                                    {% trans "Forgot your password?" %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" name="remember" id="id_remember" checked>
+                    <label for="id_remember">{% trans "Remember Me" %}</label>
+                </div>
+            </div>
+
+            <button type="submit" class="auth-submit-btn">
+                {% trans "Log In" %}
+            </button>
+        </form>
+
+        <p class="auth-footer-text">
+            {% trans "Don't have an account?" %}
+            <a href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
+        </p>
+    </div>
+</div>
+
+<style>
+    .auth-page-wrapper { flex: 1 1 auto; display: flex; justify-content: center; align-items: flex-start; padding: 110px 20px; box-sizing: border-box; width: 100%; }
+    .auth-card { background-color: rgba(10, 10, 10, 0.9); border: 1px solid #f1c40f; box-shadow: 0 0 20px rgba(241, 196, 15, 0.2); padding: 40px; width: 100%; max-width: 450px; box-sizing: border-box; border-radius: 4px; min-height: 640px; display: flex; flex-direction: column; justify-content: center; }
+    
+    .auth-error-list {
+    background-color: rgba(231, 76, 60, 0.15);
+    border: 1px solid #e74c3c;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    color: #ff8888;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    list-style: none;
+    text-align: center; 
+    width: 100%;        
+    box-sizing: border-box; 
+}
+
+    .auth-error-list li {
+    margin-bottom: 5px;
+}
+
+    .checkbox-group { display: flex; align-items: center; margin-top: -10px; margin-bottom: 20px; color: #f1c40f; font-size: 14px; text-transform: uppercase; cursor: pointer; }
+    .checkbox-group input[type="checkbox"] { width: 18px !important; height: 18px; margin-right: 10px; cursor: pointer; accent-color: #f1c40f; background: rgba(20, 20, 20, 0.8); border: 1px solid #f1c40f; }
+
+    
+    .forgot-password-link { display: block; margin-top: 8px; color: #f1c40f !important; text-decoration: underline; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .forgot-password-link:hover { color: #fff !important; text-decoration: none; }
+
+    .auth-card h2 { font-family: 'Oswald', sans-serif; color: #f1c40f; text-align: center; text-transform: uppercase; font-size: 28px; margin-top: 0; margin-bottom: 30px; letter-spacing: 2px; }
+    .allauth-form-fields input { width: 100%; background: rgba(20, 20, 20, 0.8); border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Oswald', sans-serif; box-sizing: border-box; }
+    .form-group { margin-bottom: 20px; text-align: left; }
+    .form-label { color: #f1c40f; display: block; margin-bottom: 8px; text-transform: uppercase; font-size: 13px; }
+    .auth-submit-btn { background: #f1c40f; color: #000; width: 100%; padding: 12px; font-family: 'Oswald'; font-weight: bold; text-transform: uppercase; cursor: pointer; border: none; margin-top: 20px; transition: 0.3s; }
+    .auth-submit-btn:hover { background: #d4ac0d; }
+    .auth-footer-text { text-align: center; margin-top: 25px; color: #aaa; font-size: 13px; }
+    .auth-footer-text a { color: #f1c40f; text-decoration: none; font-weight: bold; }
+</style>
+{% endblock %}

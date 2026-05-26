@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class GameServer(models.Model):
     name = models.CharField(max_length=50)
     rate = models.IntegerField(default=1)
@@ -24,30 +25,33 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
+
 class TopPlayer(models.Model):
     nickname = models.CharField(max_length=50)
     pvp = models.IntegerField(default=0)
-    pk_count = models.IntegerField(default=0) # ИЗМЕНИ pk НА pk_count
+    pk_count = models.IntegerField(default=0)  # ИЗМЕНИ pk НА pk_count
 
     def __str__(self):
         return self.nickname
 
+
 class Character(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chars')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="chars")
     name = models.CharField(max_length=16, unique=True)
     level = models.IntegerField(default=1)
 
     def __str__(self):
         return self.name
-    
-    
+
 
 class L2Server(models.Model):
     name = models.CharField(max_length=50)
     server_type = models.CharField(max_length=100)
     opening_date = models.CharField(max_length=100, blank=True)
     online_count = models.IntegerField(default=0)
-    status = models.CharField(max_length=20, default='online') # 'online' или 'upcoming'
+    status = models.CharField(
+        max_length=20, default="online"
+    )  # 'online' или 'upcoming'
 
     def __str__(self):
         return self.name
