@@ -40,34 +40,34 @@ To run this project locally:
 1. **Clone the repository:**
    ```bash
    git clone [https://github.com/Sainozhenko/MMORPG.git](https://github.com/Sainozhenko/MMORPG.git)
-   cd MMORPG
-Set up a virtual environment & install dependencies:
+   
+2. Install dependencies:
 
-Bash
-python -m venv .venv
-source .venv/scripts/activate  # On Windows (Git Bash)
 pip install -r requirements.txt
-Compile translations (French support):
-(Ensure you have gettext installed and configured in your system PATH)
 
-Bash
-python manage.py compilemessages
-Run migrations & start the server:
+3. Run migrations:
 
-Bash
 python manage.py migrate
+
+4. Start the server:
+
 python manage.py runserver
+
 🌐 Live Demo
 Check out the live version of the project hosted on Render:
-👉 MMORPG Live Server Website
+👉[MMORPG Website](https://mmorpg-zydu.onrender.com/)
 
 📸 Screenshots
-Homepage (Dark Fantasy Theme)
-👨‍💻 Author
+Add your best screenshots here to showcase your beautiful UI!
+Example:
+![Homepage](static/images/screenshot.png)
+
+👨‍💻 Author:
 Dmytro Sainozhenko
 
 GitHub: @Sainozhenko
 
-LinkedIn: dsainozh
+Project: MMORPG Server Portal
 
 ⭐ If you like this project, feel free to give it a star!
+   
