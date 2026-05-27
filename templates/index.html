@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load i18n %}
 {% load static %}
 {% block content %}
 
@@ -26,7 +26,6 @@
         box-sizing: border-box;
         transition: 0.3s ease-in-out;
     }
-    
     
     .block:hover {
         border-color: rgba(241, 196, 15, 0.4);
@@ -85,7 +84,6 @@
         transition: width 1.5s ease-in-out;
     }
 
-    
     .news-item {
         margin-top: 15px; 
         border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
@@ -107,42 +105,64 @@
 </style>
 
 <section class="info-container" id="main-info-container">
-    <div class="block" id="block-servers">
-        <h3 style="color: #f1c40f; border-bottom: 1px solid rgba(241, 196, 15, 0.3); font-family: 'Oswald', sans-serif; text-transform: uppercase; font-size: 20px; letter-spacing: 1px; margin: 0; padding-bottom: 12px;" id="title-status">
-            SERVER STATUS
+    
+    <div class="block" id="block-news">
+        <h3 style="color: #f1c40f; border-bottom: 1px solid rgba(241, 196, 15, 0.3); font-family: 'Oswald', sans-serif; text-transform: uppercase; font-size: 20px; letter-spacing: 1px; margin: 0; padding-bottom: 12px;" id="title-news">
+            {% trans "LAST NEWS" %}
         </h3>
-        {% for server in servers %}
-            <div class="server-row" id="server-row-{{ forloop.counter }}">
-                <div class="server-main-info">
-                    <div class="server-info">
-                        <i class="fas fa-fire status-fire" id="fire-{{ forloop.counter }}"></i>
-                        <span id="name-{{ forloop.counter }}">{{ server.name }} [{{ server.server_type }}]</span>
-                    </div>
-                    <span class="status-online" id="online-{{ forloop.counter }}">{{ server.online_count }}</span>
-                </div>
-                <div class="progress-bg">
-                    <div class="progress-fill" style="width: {{ server.online_count|add:0|divisibleby:10 }}%;"></div>
+        {% for n in news %}
+            <div class="news-item" id="news-item-{{ forloop.counter }}" style="position: relative; z-index: 10;">
+                <small style="color: #f1c40f; font-family: 'Oswald'; font-size: 12px; font-weight: 500;" id="news-date-{{ forloop.counter }}">{{ n.created_at|date:"d.m" }}</small>
+                <div style="margin-top: 5px;">
+                    <a href="{% url 'forum:thread_detail' n.id %}" class="news-title-link" id="news-title-{{ forloop.counter }}" style="display: block; cursor: pointer; position: relative; z-index: 15;">
+                        {{ n.title }}
+                    </a>
                 </div>
             </div>
         {% empty %}
-            <p id="no-servers-text" style="color: #666; font-family: 'Oswald'; margin-top: 15px; text-transform: uppercase; font-size: 13px;">Servers are updating...</p>
+            <p id="no-news-text" style="color: #666; font-family: 'Oswald'; margin-top: 15px; text-transform: uppercase; font-size: 13px;">
+                {% trans "No forum topics available." %}
+            </p>
         {% endfor %}
     </div>
 
-    <div class="block" id="block-news">
-        <h3 style="color: #f1c40f; border-bottom: 1px solid rgba(241, 196, 15, 0.3); font-family: 'Oswald', sans-serif; text-transform: uppercase; font-size: 20px; letter-spacing: 1px; margin: 0; padding-bottom: 12px;" id="title-news">
-            LATEST NEWS
+    <div class="block" id="block-top-players">
+        <h3 style="color: #f1c40f; border-bottom: 1px solid rgba(241, 196, 15, 0.3); font-family: 'Oswald', sans-serif; text-transform: uppercase; font-size: 20px; letter-spacing: 1px; margin: 0; padding-bottom: 12px;" id="title-top-players">
+            {% trans "TOP PLAYERS" %}
         </h3>
-        {% for n in news %}
-            <div class="news-item" id="news-item-{{ forloop.counter }}">
-                <small style="color: #f1c40f; font-family: 'Oswald'; font-size: 12px; font-weight: 500;" id="news-date-{{ forloop.counter }}">{{ n.created_at|date:"d.m" }}</small>
-                <div>
-                    <a href="#" class="news-title-link" id="news-title-{{ forloop.counter }}">{{ n.title }}</a>
-                </div>
-            </div>
-        {% empty %}
-            <p id="no-news-text" style="color: #666; font-family: 'Oswald'; margin-top: 15px; text-transform: uppercase; font-size: 13px;">No news available.</p>
-        {% endfor %}
+        
+        {% if all_characters %}
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-family: Arial, sans-serif; font-size: 14px; color: #aaaaaa;">
+                <thead>
+                    <tr style="border-bottom: 1px solid rgba(241, 196, 15, 0.15);">
+                        <th style="text-align: left; color: #f1c40f; font-family: 'Oswald', sans-serif; text-transform: uppercase; padding: 6px 0; font-size: 13px;">#</th>
+                        <th style="text-align: left; color: #f1c40f; font-family: 'Oswald', sans-serif; text-transform: uppercase; padding: 6px 0; font-size: 13px;">{% trans "Nickname" %}</th>
+                        <th style="text-align: right; color: #f1c40f; font-family: 'Oswald', sans-serif; text-transform: uppercase; padding: 6px 0; font-size: 13px;">{% trans "Level" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for char in all_characters|slice:":5" %}
+                    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                        <td style="padding: 10px 0; color: #666; font-family: 'Oswald', sans-serif; width: 30px;">
+                            {{ forloop.counter }}
+                        </td>
+                        <td style="padding: 10px 0; color: #ffffff; font-weight: bold; font-size: 15px;">
+                            {{ char.name }}
+                        </td>
+                        <td style="padding: 10px 0; color: #f1c40f; font-weight: bold; text-align: right; font-family: 'Oswald', sans-serif; font-size: 15px;">
+                            {# Перевод префикса уровня, если потребуется в будущем #}
+                            {% trans "Lv." %} {{ char.level }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p id="no-chars-text" style="color: #666; font-family: 'Oswald'; margin-top: 15px; text-transform: uppercase; font-size: 13px;">
+                {% trans "No characters created yet." %}
+            </p>
+        {% endif %}
     </div>
+
 </section>
 {% endblock content %}

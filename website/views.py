@@ -6,14 +6,21 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 from .models import L2Server, News, TopPlayer, Character
 from . import services
-
+from forum.models import ForumThread
+from django.utils.translation import gettext_lazy as _
 
 def home(request):
+    latest_threads = ForumThread.objects.all().order_by('-created_at')[:5]
+
     context = {
         "servers": L2Server.objects.all(),
-        "news": News.objects.order_by("-created_at")[:5],
+        "news": latest_threads,
         "top_pvp": TopPlayer.objects.order_by("-pvp")[:5],
         "top_pk": TopPlayer.objects.order_by("-pk")[:5],
+        "all_characters": Character.objects.order_by("-level"), 
+        
+        
+        "welcome_message": _("Welcome to our Interlude Project!"), 
     }
     return render(request, "index.html", context)
 

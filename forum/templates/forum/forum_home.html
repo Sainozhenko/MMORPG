@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block hero %}{% endblock hero %} {% block content %}
+<div class="forum-page-wrapper">
+    
+    <div style="max-width: 1300px; margin: 0 auto; display: flex; gap: 25px; box-sizing: border-box; width: 100%;">
+        
+        <div style="flex: 3; display: flex; flex-direction: column; gap: 25px;">
+            
+            {% for cat in categories %}
+            <div style="background: rgba(13, 13, 13, 0.85); border: 1px solid rgba(241, 196, 15, 0.15); border-radius: 6px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                
+                <div style="background: linear-gradient(90deg, rgba(241, 196, 15, 0.15), transparent); padding: 12px 20px; border-bottom: 1px solid rgba(241, 196, 15, 0.2);">
+                    <h2 style="margin: 0; color: #f1c40f; font-size: 18px; text-transform: uppercase; letter-spacing: 1px;">{{ cat.title }}</h2>
+                </div>
+
+                <div style="display: flex; flex-direction: column;">
+                    {% for thread in cat.threads.all %}
+                    <div style="display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.03); gap: 15px; transition: background 0.2s;" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.02)'" onmouseout="this.style.backgroundColor='transparent'">
+                        
+                        <div style="width: 40px; height: 40px; background: rgba(241, 196, 15, 0.05); border: 1px solid rgba(241, 196, 15, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #f1c40f;">
+                            <span style="font-size: 18px;">💬</span>
+                        </div>
+
+                        <div style="flex: 1;">
+                            <a href="{% url 'forum:thread_detail' thread.id %}" style="color: #fff; text-decoration: none; font-size: 16px; font-weight: 500; display: block; margin-bottom: 4px; transition: color 0.2s;" onmouseover="this.style.color='#f1c40f'" onmouseout="this.style.color='#fff'">
+                                {{ thread.title }}
+                            </a>
+                            <span style="color: #666; font-family: Arial, sans-serif; font-size: 12px;"> Started by {{ thread.creator.username }}</span>
+                        </div>
+
+                        <div style="width: 100px; text-align: center; border-left: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05);">
+                            <span style="color: #fff; display: block; font-size: 16px;">{{ thread.posts.count }}</span>
+                            <span style="color: #555; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Replies</span>
+                        </div>
+
+                        <div style="width: 220px; font-family: Arial, sans-serif; font-size: 12px; color: #aaa; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            {% if thread.posts.last %}
+                                <span style="color: #f1c40f;">Last post</span> by {{ thread.posts.last.author.username }}
+                                <div style="color: #555; font-size: 11px; margin-top: 2px;">{{ thread.posts.last.created_at|date:"d M Y, H:i" }}</div>
+                            {% else %}
+                                <span style="color: #444; text-transform: uppercase; font-family: 'Oswald';">No replies yet</span>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                    {% empty %}
+                    <div style="padding: 20px; color: #555; font-size: 14px; text-transform: uppercase;">No threads created inside this category.</div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            {% empty %}
+            <div style="background: rgba(13, 13, 13, 0.85); padding: 30px; border: 1px solid rgba(241, 196, 15, 0.15); border-radius: 6px; text-align: center; color: #666; text-transform: uppercase;">
+                No forum categories available. Create them in Django Admin.
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <div style="width: 320px; display: flex; flex-direction: column; gap: 25px;">
+            
+            <div style="background: rgba(13, 13, 13, 0.85); border: 1px solid rgba(241, 196, 15, 0.15); border-radius: 6px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <div style="background: rgba(255,255,255,0.02); padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <h3 style="margin: 0; color: #f1c40f; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Recent Topics</h3>
+                </div>
+                <div style="padding: 10px 15px; display: flex; flex-direction: column; gap: 12px;">
+                    {% for recent in recent_threads %}
+                    <div style="display: flex; gap: 10px; align-items: flex-start; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 10px;">
+                        <div style="font-size: 15px; margin-top: 2px;">📄</div>
+                        <div style="flex: 1; min-width: 0;">
+                            <a href="{% url 'forum:thread_detail' recent.id %}" style="color: #eee; text-decoration: none; font-size: 14px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: color 0.1s;" onmouseover="this.style.color='#f1c40f'" onmouseout="this.style.color='#eee'">
+                                {{ recent.title }}
+                            </a>
+                            <span style="color: #555; font-family: Arial, sans-serif; font-size: 11px;">By {{ recent.creator.username }} • {{ recent.created_at|date:"M d" }}</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div style="color: #444; font-size: 12px; text-transform: uppercase; padding: 10px 0;">No recent topics.</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div style="background: rgba(13, 13, 13, 0.85); border: 1px solid rgba(241, 196, 15, 0.15); border-radius: 6px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <div style="background: rgba(255,255,255,0.02); padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <h3 style="margin: 0; color: #f1c40f; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Forum Information</h3>
+                </div>
+                <div style="padding: 15px; font-family: Arial, sans-serif; font-size: 13px; color: #aaa;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Total Categories:</span>
+                        <strong style="color: #fff; font-family: 'Oswald'; font-size: 15px;">{{ categories.count }}</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Active Discussions:</span>
+                        <strong style="color: #fff; font-family: 'Oswald'; font-size: 15px;">{{ recent_threads.count }}</strong>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .forum-page-wrapper {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 120px 20px 40px 20px; /* 120px сверху создают чистый отступ от логотипа и верхнего меню */
+        box-sizing: border-box;
+        width: 100%;
+    }
+</style>
+{% endblock content %}

@@ -4,7 +4,6 @@
 
 {% block content %}
 <div class="confirm-page-wrapper">
-    
     <div class="confirm-card">
         
         <div class="envelope-badge">
@@ -15,26 +14,26 @@
             {% user_display confirmation.email_address.user as user_display %}
             
             <h1 class="confirm-title">
-                Welcome, {{ user_display }}!
+                {% blocktrans %}Welcome, {{ user_display }}!{% endblocktrans %}
             </h1>
             
             <p class="confirm-text">
-                Please confirm that the email address <span class="highlight-email">{{ confirmation.email_address.email }}</span> belongs to you to complete your game account activation.
+                {% trans "Please confirm that the email address" %} <span class="highlight-email">{{ confirmation.email_address.email }}</span> {% trans "belongs to you to complete your game account activation." %}
             </p>
 
             <form method="post" action="{% url 'account_confirm_email' confirmation.key %}" style="width: 100%; display: flex; justify-content: center;">
                 {% csrf_token %}
                 <button type="submit" class="mmo-submit-btn">
-                    Confirm & Activate
+                    {% trans "Confirm & Activate" %}
                 </button>
             </form>
 
         {% else %}
             <h1 class="confirm-title error">
-                Link Expired
+                {% trans "Link Expired" %}
             </h1>
             <p class="confirm-text">
-                This activation link is invalid, expired, or has already been used.
+                {% trans "This activation link is invalid, expired, or has already been used." %}
             </p>
         {% endif %}
 
@@ -52,7 +51,6 @@
         box-sizing: border-box;
     }
     
-   
     .confirm-card {
         width: 100%; 
         max-width: 600px; 
@@ -67,7 +65,6 @@
         box-sizing: border-box;
     }
     
-   
     .envelope-badge {
         margin-bottom: 30px; 
         background-color: #f1c40f; 
@@ -84,7 +81,6 @@
         font-size: 1.6rem;
     }
     
-    
     .confirm-title {
         color: #ffffff; 
         font-family: 'Oswald', 'Arial Black', sans-serif; 
@@ -98,7 +94,6 @@
     .confirm-title.error {
         color: #e74c3c;
     }
-    
     
     .confirm-text {
         color: #aaaaaa; 
@@ -115,7 +110,6 @@
         font-weight: bold;
     }
     
-  
     .mmo-submit-btn {
         width: 100%; 
         max-width: 420px; 

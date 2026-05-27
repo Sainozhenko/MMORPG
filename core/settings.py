@@ -1,9 +1,16 @@
 import os, dj_database_url
 from pathlib import Path
 from decouple import config
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGE_CODE = 'en'
+LANGUAGES = [
+    ('en', _('English')),
+    ('fr', _('French')),
+]
+USE_I18N = True
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = True
 ALLOWED_HOSTS = ["mmorpg-zydu.onrender.com", "localhost", "127.0.0.1"]
@@ -25,6 +32,7 @@ INSTALLED_APPS = [
     "crispy_forms", 
     "crispy_bootstrap5",
     "debug_toolbar",
+    "forum",
 ]
 
 SITE_ID = 1
@@ -39,6 +47,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
     "allauth.account.middleware.AccountMiddleware",
 ]
 
@@ -103,3 +112,8 @@ DATABASES = {
         conn_max_age=600
     )
 }
+
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
