@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # Служба базы данных
   db:
     image: postgres:15-alpine
     volumes:

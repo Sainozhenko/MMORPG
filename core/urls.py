@@ -7,11 +7,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("website.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
-    # Используем только allauth, удалили старый auth
     path("accounts/", include("allauth.urls")),
+    path('forum/', include('forum.urls', namespace='forum')),
 ]
 
-# Статичные файлы и Debug Toolbar (если нужен)
 if settings.DEBUG:
     try:
         import debug_toolbar

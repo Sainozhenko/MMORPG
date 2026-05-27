@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block hero %}{% endblock hero %} {% block content %}
+<div class="forum-page-wrapper">
+    <div style="max-width: 1000px; margin: 0 auto; font-family: 'Oswald', sans-serif; color: #fff; width: 100%;">
+        
+        <div style="margin-bottom: 20px;">
+            <a href="{% url 'forum:home' %}" style="color: #f1c40f; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">
+                ← Back to Forum Categories
+            </a>
+        </div>
+
+        <div style="background: rgba(15, 15, 15, 0.85); border: 1px solid rgba(241, 196, 15, 0.15); padding: 25px; border-radius: 4px; margin-bottom: 25px; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);">
+            <h2 style="color: #f1c40f; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 1px;">{{ thread.title }}</h2>
+            <div style="color: #666; font-size: 13px; text-transform: uppercase;">
+                Started by <span style="color: #fff; font-weight: bold;">{{ thread.creator.username }}</span> | {{ thread.created_at|date:"Y-m-d H:i" }}
+            </div>
+        </div>
+
+        <h3 style="color: #f1c40f; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 8px; margin-bottom: 20px;">
+            Discussion Replies
+        </h3>
+
+        {% for post in posts %}
+            <div style="background: rgba(10, 10, 10, 0.75); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 4px; margin-bottom: 15px; display: flex; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                
+                <div style="width: 180px; background: rgba(5, 5, 5, 0.5); padding: 20px; text-align: center; border-right: 1px solid rgba(255, 255, 255, 0.05);">
+                    <div style="color: #fff; font-weight: bold; font-size: 15px; margin-bottom: 5px; word-break: break-all;">{{ post.author.username }}</div>
+                    <div style="color: #f1c40f; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Community Member</div>
+                </div>
+                
+                <div style="flex: 1; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div style="color: #eee; font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; white-space: pre-line;">
+                        {{ post.content }}
+                    </div>
+                    <div style="color: #444; font-size: 11px; text-align: right; margin-top: 15px;">
+                        Posted on {{ post.created_at|date:"Y-m-d H:i" }}
+                    </div>
+                </div>
+
+            </div>
+        {% empty %}
+            <div style="background: rgba(10, 10, 10, 0.75); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px; text-align: center; color: #555; border-radius: 4px; text-transform: uppercase; font-size: 14px;">
+                There are no replies in this thread yet.
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+<style>
+    .forum-page-wrapper {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 120px 20px 40px 20px; /* 120px сверху создают безопасный отступ от фиксированного меню */
+        box-sizing: border-box;
+        width: 100%;
+    }
+</style>
+
+{% endblock %}
