@@ -8,9 +8,11 @@ class GameServer(models.Model):
     status = models.BooleanField(default=True)
     online_count = models.IntegerField(default=0)
     opening_date = models.DateTimeField(auto_now_add=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/default.png', verbose_name="Avatar")
 
     def __str__(self):
-        return self.name
+        return f"{self.user.username}'s profile"
 
 
 class News(models.Model):
@@ -29,7 +31,7 @@ class News(models.Model):
 class TopPlayer(models.Model):
     nickname = models.CharField(max_length=50)
     pvp = models.IntegerField(default=0)
-    pk_count = models.IntegerField(default=0)  # ИЗМЕНИ pk НА pk_count
+    pk_count = models.IntegerField(default=0) 
 
     def __str__(self):
         return self.nickname
@@ -51,7 +53,7 @@ class L2Server(models.Model):
     online_count = models.IntegerField(default=0)
     status = models.CharField(
         max_length=20, default="online"
-    )  # 'online' или 'upcoming'
+    ) 
 
     def __str__(self):
         return self.name

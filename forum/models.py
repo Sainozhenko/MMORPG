@@ -40,3 +40,10 @@ class ForumPost(models.Model):
 
     def __str__(self):
         return f"Post by {self.author.username} in thread '{self.thread.title}'"
+    
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/default.png', verbose_name="Avatar")
+
+    def __str__(self):
+        return f"{self.user.username}'s profile"

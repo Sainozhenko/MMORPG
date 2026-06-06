@@ -6,6 +6,15 @@
     <div class="profile-card">
         
         <div class="profile-header">
+            <div class="profile-avatar-section">
+                <img src="{{ profile.avatar.url }}" alt="Avatar" class="profile-avatar">
+                <form method="post" enctype="multipart/form-data" class="avatar-upload-form">
+                    {% csrf_token %}
+                    {{ form.avatar }}
+                    <button type="submit" class="btn-save-avatar">{% trans "Update" %}</button>
+                </form>
+            </div>
+
             <h2>
                 <i class="fas fa-user-shield"></i> {% trans "Account:" %} <span>{{ user.username }}</span>
             </h2>
@@ -45,6 +54,12 @@
 </div>
 
 <style>
+    
+    .profile-avatar-section { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .profile-avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #f1c40f; }
+    .avatar-upload-form { display: flex; flex-direction: column; gap: 5px; font-size: 12px; }
+    .btn-save-avatar { background: #333; color: #fff; border: none; padding: 5px; cursor: pointer; border-radius: 3px; }
+    
     .profile-page-wrapper { flex: 1 1 auto; display: flex; justify-content: center; align-items: flex-start; padding: 80px 20px; min-height: 70vh; }
     .profile-card { background-color: rgba(10, 10, 10, 0.9); border: 1px solid #f1c40f; box-shadow: 0 0 25px rgba(241, 196, 15, 0.2); padding: 40px; width: 100%; max-width: 750px; border-radius: 4px; box-sizing: border-box; }
     .profile-header { display: flex; justify-content: space-between; align-items: center; gap: 30px; border-bottom: 2px solid #f1c40f; padding-bottom: 20px; margin-bottom: 35px; flex-wrap: wrap; }
@@ -71,8 +86,7 @@
     .btn-logout:hover { background: #e74c3c; color: #fff; box-shadow: 0 0 15px rgba(231, 76, 60, 0.4); }
 
     @media (max-width: 550px) {
-        .profile-header { flex-direction: column; align-items: flex-start; gap: 15px; }
-        .btn-create { width: 100%; text-align: center; box-sizing: border-box; }
+        .profile-header { flex-direction: column; align-items: center; }
     }
 </style>
 {% endblock %}

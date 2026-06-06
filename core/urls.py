@@ -9,7 +9,7 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("accounts/", include("allauth.urls")),
     path('forum/', include('forum.urls', namespace='forum')),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     try:

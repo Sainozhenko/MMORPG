@@ -15,6 +15,9 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = True
 ALLOWED_HOSTS = ["mmorpg-zydu.onrender.com", "localhost", "127.0.0.1"]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 INSTALLED_APPS = [
     "django.contrib.admin", 
     "django.contrib.auth", 

@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.views import View
+
+from website.forms import ProfileForm
 from .models import L2Server, News, TopPlayer, Character
 from . import services
 from forum.models import ForumThread
@@ -79,3 +81,18 @@ def delete_char(request, char_id):
     char = get_object_or_404(Character, id=char_id, owner=request.user)
     char.delete()
     return redirect("profile")
+
+def profile_view(request):
+    profile = request.user.profile 
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+    else:
+        form = ProfileForm(instance=profile)
+    
+    return render(request, 'profile.html', {
+        'chars': ..., 
+        'profile': profile,
+        'form': form
+    })
